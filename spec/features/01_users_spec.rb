@@ -17,14 +17,14 @@ describe "/users" do
     second_user.save
 
     visit "/user_sign_in"
-    
+
     within(:css, "form") do
       fill_in "Email", with: first_user.email
       fill_in "Password", with: first_user.password
       # click_on "Sign in"
-      find("button", :text => /Sign in/i ).click
+      find("button", :text => /Sign in/i).click
     end
-    
+
     visit "/users"
 
     expect(page).to have_content(first_user.username),
@@ -58,21 +58,20 @@ describe "/users" do
     thrid_user.save
 
     visit "/user_sign_in"
-    
+
     within(:css, "form") do
       fill_in "Email", with: first_user.email
       fill_in "Password", with: first_user.password
       # click_on "Sign in"
-      find("button", :text => /Sign in/i ).click
+      find("button", :text => /Sign in/i).click
     end
-    
+
     visit "/users"
 
     expect(page).to have_text(/Yes/i, :count => 1),
       "Expect page to have text 'Yes' once, but didn't"
     expect(page).to have_text(/No/i, :count => 2),
       "Expect page to have text 'No' twice, but didn't"
-    
   end
 end
 
@@ -93,19 +92,18 @@ describe "/users" do
     second_user.save
 
     visit "/user_sign_in"
-    
+
     within(:css, "form") do
       fill_in "Email", with: first_user.email
       fill_in "Password", with: first_user.password
-      
-      find("button", :text => /Sign in/i ).click
+
+      find("button", :text => /Sign in/i).click
     end
 
     visit "/users"
 
     expect(page).to have_tag("button", :text => /Follow/i),
       "Expected page to have a <button> with the text, 'Follow', but didn't find one."
-
   end
 end
 
@@ -140,14 +138,14 @@ describe "/users" do
     chum_bucket.private = false
     chum_bucket.password = "password"
     chum_bucket.save
-    
+
     visit "/user_sign_in"
-    
+
     within(:css, "form") do
       fill_in "Email", with: wavy_david.email
       fill_in "Password", with: wavy_david.password
-      
-      find("button", :text => /Sign in/i ).click
+
+      find("button", :text => /Sign in/i).click
     end
 
     visit "/users"
@@ -172,7 +170,7 @@ describe "/users" do
     florence_farmer.private = false
     florence_farmer.password = "password"
     florence_farmer.save
-    
+
     follow = FollowRequest.new
     follow.sender_id = barry_bluejeans.id
     follow.recipient_id = florence_farmer.id
@@ -180,12 +178,12 @@ describe "/users" do
     follow.save
 
     visit "/user_sign_in"
-    
+
     within(:css, "form") do
       fill_in "Email", with: barry_bluejeans.email
       fill_in "Password", with: barry_bluejeans.password
-      
-      find("button", :text => /Sign in/i ).click
+
+      find("button", :text => /Sign in/i).click
     end
 
     visit "/users"
@@ -210,7 +208,7 @@ describe "/users" do
     chum_bucket.private = false
     chum_bucket.password = "password"
     chum_bucket.save
-    
+
     follow = FollowRequest.new
     follow.sender_id = wavy_david.id
     follow.recipient_id = chum_bucket.id
@@ -218,12 +216,12 @@ describe "/users" do
     follow.save
 
     visit "/user_sign_in"
-    
+
     within(:css, "form") do
       fill_in "Email", with: wavy_david.email
       fill_in "Password", with: wavy_david.password
-      
-      find("button", :text => /Sign in/i ).click
+
+      find("button", :text => /Sign in/i).click
     end
 
     visit "/users"
@@ -250,7 +248,7 @@ describe "/users" do
     new_bob.private = false
     new_bob.password = "password"
     new_bob.save
-    
+
     follow = FollowRequest.new
     follow.sender_id = camel_suitcase.id
     follow.recipient_id = new_bob.id
@@ -258,12 +256,12 @@ describe "/users" do
     follow.save
 
     visit "/user_sign_in"
-    
+
     within(:css, "form") do
       fill_in "Email", with: camel_suitcase.email
       fill_in "Password", with: camel_suitcase.password
-      
-      find("button", :text => /Sign in/i ).click
+
+      find("button", :text => /Sign in/i).click
     end
 
     visit "/users"
@@ -272,7 +270,6 @@ describe "/users" do
       "Expected page to not have the text 'Request sent', but found it anyway."
   end
 end
-
 
 describe "/users/[USERNAME]/feed" do
   it "has the photos posted by the people the user is following", :points => 3 do
@@ -311,7 +308,7 @@ describe "/users/[USERNAME]/feed" do
     second_other_user_first_photo.caption = "Some caption a"
     second_other_user_first_photo.image = File.open Rails.root + "spec/support/kirb.gif"
     second_other_user_first_photo.save
-    
+
     second_other_user_second_photo = Photo.new
     second_other_user_second_photo.owner_id = second_other_user.id
     second_other_user_second_photo.caption = "Some caption b"
@@ -379,14 +376,13 @@ describe "/users/[USERNAME]/feed" do
     fourth_follow_request.save
 
     visit "/user_sign_in"
-    
-    
+
     within(:css, "form") do
       fill_in "Email", with: user.email
       fill_in "Password", with: user.password
-      find("button", :text => /Sign in/i ).click
+      find("button", :text => /Sign in/i).click
     end
-    
+
     visit "/users/#{user.username}/feed"
 
     expect(page).to have_content(second_other_user_first_photo.caption),
@@ -397,7 +393,7 @@ describe "/users/[USERNAME]/feed" do
       "Expected page to have text '#{fourth_other_user_first_photo.caption}', but didn't find it."
     expect(page).to have_content(fourth_other_user_second_photo.caption),
       "Expected page to have text '#{fourth_other_user_second_photo.caption}', but didn't find it."
-      
+
     expect(page).to have_no_content(first_other_user_first_photo.caption),
       "Expected page to not have text '#{first_other_user_first_photo.caption}', but did find it."
     expect(page).to have_no_content(third_other_user_first_photo.caption),
@@ -453,13 +449,13 @@ describe "/users/[USERNAME]/liked_photos" do
     third_like.save
 
     visit "/user_sign_in"
-    
+
     within(:css, "form") do
       fill_in "Email", with: user.email
       fill_in "Password", with: user.password
-      find("button", :text => /Sign in/i ).click
+      find("button", :text => /Sign in/i).click
     end
-    
+
     visit "/users/#{user.username}/liked_photos"
 
     expect(page).to have_content(first_photo.caption),
@@ -478,25 +474,25 @@ describe "/users/[USERNAME]/discover" do
     user.email = "jelani_is_the_best_ta@example.com"
     user.password = "password"
     user.save
-    
+
     first_other_user = User.new
     first_other_user.username = "patrick_is_a_good_ta"
     first_other_user.email = "patrick_is_a_good_ta@example.com"
     first_other_user.password = "patrick_is_a_good_ta"
     first_other_user.save
-    
+
     second_other_user = User.new
     second_other_user.username = "logan_is_a_ta"
     second_other_user.email = "logan_is_a_ta@example.com"
     second_other_user.password = "logan_is_a_ta"
     second_other_user.save
-    
+
     third_other_user = User.new
     third_other_user.username = "give_me_free_cookies"
     third_other_user.email = "give_me_free_cookies@example.com"
     third_other_user.password = "give_me_free_cookies"
     third_other_user.save
-    
+
     fourth_other_user = User.new
     fourth_other_user.username = "jelani_is_still_the_best_ta"
     fourth_other_user.email = "jelani_is_still_the_best_ta@example.com"
@@ -616,13 +612,13 @@ describe "/users/[USERNAME]/discover" do
     fourth_follow_request.save
 
     visit "/user_sign_in"
-    
+
     within(:css, "form") do
       fill_in "Email", with: user.email
       fill_in "Password", with: user.password
-      find("button", :text => /Sign in/i ).click
+      find("button", :text => /Sign in/i).click
     end
-    
+
     visit "/users/#{user.username}/discover"
 
     expect(page).to have_content(second_other_user_first_liked_photo.caption),
@@ -640,4 +636,3 @@ describe "/users/[USERNAME]/discover" do
       "Expect page to have text '#{third_other_user_first_liked_photo}', but didn't"
   end
 end
-

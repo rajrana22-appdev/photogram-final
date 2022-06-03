@@ -65,7 +65,7 @@ task({ :sample_data => :environment}) do
     end
     puts "Found a password column. Added passwords."
   else
-    # puts "No password column found. Didn't add passwords."
+    puts "No password column found. Didn't add passwords."
   end
 
   follow_requests = [
