@@ -21,12 +21,6 @@ class UsersController < ApplicationController
   end
 
   def show
-    the_id = params.fetch("path_id")
-
-    matching_users = User.where({ :id => the_id })
-
-    @user = matching_users.at(0)
-
     render({ :template => "users/show.html.erb" })
   end
 
@@ -50,7 +44,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    the_id = params.fetch("path_id")
+    the_id = params.fetch("path_username")
     the_user = User.where({ :id => the_id }).at(0)
 
     the_user.comments_count = params.fetch("query_comments_count")
@@ -69,7 +63,7 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    the_id = params.fetch("path_id")
+    the_id = params.fetch("path_username")
     the_user = User.where({ :id => the_id }).at(0)
 
     the_user.destroy
