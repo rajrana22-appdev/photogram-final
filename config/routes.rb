@@ -17,13 +17,13 @@ Rails.application.routes.draw do
   get("/cancel_user_account", { :controller => "users", :action => "destroy" })
 
   # SIGN UP FORM
-  get("/user_sign_up", { :controller => "user_forms", :action => "new_registration_form" })
+  get("/user_sign_up", { :controller => "users", :action => "new_registration_form" })
 
   # SIGN IN FORM
   get("/user_sign_in", { :controller => "user_forms", :action => "new_session_form" })
 
   # SIGN OUT
-  get("/user_sign_out", { :controller => "users_form", :action => "destroy_cookies" })
+  get("/user_sign_out", { :controller => "user_forms", :action => "destroy_cookies" })
 
   # STORE COOKIE
   post("/user_verify_credentials", { :controller => "user_forms", :action => "create_cookie" })

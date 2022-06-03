@@ -1,7 +1,5 @@
 class UserFormsController < ApplicationController
-  def new_registration_form
-    render({ :template => "user_forms/sign_up.html.erb" })
-  end
+  skip_before_action(:force_user_sign_in, { :only => [:new_session_form, :create_cookie] })
 
   def new_session_form
     render({ :template => "user_forms/sign_in.html.erb" })
@@ -12,18 +10,18 @@ class UserFormsController < ApplicationController
 
     password = params.fetch("query_password")
 
-    if user.nil?
-      redirect_to("/user_sign_in", { :alert => "No user with that email address." })
-    else
-      valid = user.authenticate(password)
+    if user != nil
+      legit = user.authenticate(password)
 
-      if valid != false
+      if legit == false
+        redirect_to("/user_sign_in", { :alert => "Incorrect password." })
+      else
         session.store(:user_id, user.id)
 
         redirect_to("/", { :notice => "Signed in successfully." })
-      else
-        redirect_to("/user_sign_in", { :alert => "Incorrect password." })
       end
+    else
+      redirect_to("/user_sign_in", { :alert => "No user with that email address." })
     end
   end
 
